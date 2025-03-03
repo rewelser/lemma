@@ -1,0 +1,19 @@
+Structure:
+
+src/main/java/com/example/restservice/
+│── RestServiceApplication.java   # Main application entry point
+│
+├── model/
+│   ├── Position.java             # Entity class
+│
+├── repository/
+│   ├── PositionRepository.java   # JPA repository interface
+│
+├── service/
+│   ├── PositionService.java      # Business logic
+│
+├── controller/
+│   ├── PositionController.java   # REST API endpoints
+│
+└── config/
+    ├── DatabaseConfig.java       # Optional DB configuration

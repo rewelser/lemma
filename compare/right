@@ -1,0 +1,16 @@
+@Entity
+public class Position {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String content;
+
+    @ManyToMany
+    @JoinTable(
+        name = "position_connections",
+        joinColumns = @JoinColumn(name = "position_id"),
+        inverseJoinColumns = @JoinColumn(name = "related_position_id")
+    )
+    private List<Position> relatedPositions = new ArrayList<>();
+}
