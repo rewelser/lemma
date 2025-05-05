@@ -13,7 +13,8 @@ import java.util.ArrayList;
 // import jakarta.persistence.OneToMany;
 // import jakarta.persistence.CascadeType;
 import jakarta.persistence.*;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Table(name = "app_user")
@@ -22,14 +23,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String email;
 
     @JsonIgnore
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Position> positions = new ArrayList<>();
+
+    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
+    public User() {}
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        // this.password = PASSWORD_ENCODER.encode(password);
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -59,8 +75,8 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String rawPassword) {
+        this.password = PASSWORD_ENCODER.encode(rawPassword);
     }
 
     public List<Position> getPositions() {

@@ -1,3 +1,12 @@
-/Users/ichorholic/Documents/Java Spring playground/gs-rest-service/initial/src/main/java/com/example/restservice/Greeting.java
-/Users/ichorholic/Documents/Java Spring playground/gs-rest-service/initial/src/main/java/com/example/restservice/GreetingController.java
-/Users/ichorholic/Documents/Java Spring playground/gs-rest-service/initial/src/main/java/com/example/restservice/RestServiceApplication.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/Greeting.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/GreetingController.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/RestServiceApplication.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/config/DatabaseConfig.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/controller/PositionController.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/controller/UserController.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/model/Position.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/model/User.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/repository/PositionRepository.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/repository/UserRepository.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/service/PositionService.java
+/Users/ichorholic/Documents/Java Spring playground/lemma/initial/src/main/java/com/example/restservice/service/UserService.java

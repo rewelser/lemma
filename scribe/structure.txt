@@ -17,3 +17,14 @@ src/main/java/com/example/restservice/
 │
 └── config/
     ├── DatabaseConfig.java       # Optional DB configuration
+
+
+frontend/
+│── src/
+│   ├── components/          # Reusable UI components
+│   ├── pages/               # Core pages (Home, Profile, Position Detail, Graph, Auth)
+│   ├── App.js               # Root React component
+│   ├── main.jsx             # Entry point (if using Vite)
+│   ├── routes.js            # Centralized route definitions
+│── package.json             # Dependencies and scripts
+│── index.html               # Main HTML file

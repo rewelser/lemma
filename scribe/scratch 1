@@ -1,0 +1,136 @@
+/* @theme jetset {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-accent: #DC7F9B;
+  --color-soft: #94BFA7;
+}
+
+@theme amontillado {
+  --color-bg: #f4ecd8;
+  --color-text: #5b4636;
+  --color-accent: #AA5042;
+  --color-soft: #D8BD8A;
+}
+
+@theme mintgoth {
+  --color-bg: #000009;
+  --color-text: #DEFFF2;
+  --color-accent: #0FF4C6;
+  --color-soft: #D68FD6;
+}
+
+@theme spring {
+  --color-bg: #F4F0BB;
+  --color-text: #43291F;
+  --color-accent: #DA2C38;
+  --color-soft: #87C38F;
+}
+
+@theme thistle {
+  --color-bg: #2F2235;
+  --color-text: #F3E0EC;
+  --color-accent: #CA9CE1;
+  --color-soft: #A499B3;
+}
+
+@theme forest {
+  --color-bg: #053B06;
+  --color-text: #D8D78F;
+  --color-accent: #139A43;
+  --color-soft: #0DAB76;
+} */
+
+/* @theme {
+  @variant jetset {
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-accent: #DC7F9B;
+    --color-soft: #94BFA7;
+  }
+
+  @variant amontillado {
+    --color-bg: #f4ecd8;
+    --color-text: #5b4636;
+    --color-accent: #AA5042;
+    --color-soft: #D8BD8A;
+  }
+
+  @variant mintgoth {
+    --color-bg: #000009;
+    --color-text: #DEFFF2;
+    --color-accent: #0FF4C6;
+    --color-soft: #D68FD6;
+  }
+
+  @variant spring {
+    --color-bg: #F4F0BB;
+    --color-text: #43291F;
+    --color-accent: #DA2C38;
+    --color-soft: #87C38F;
+  }
+
+  @variant forest {
+    --color-bg: #053B06;
+    --color-text: #D8D78F;
+    --color-accent: #139A43;
+    --color-soft: #0DAB76;
+  }
+
+  @variant thistle {
+    --color-bg: #2F2235;
+    --color-text: #F3E0EC;
+    --color-accent: #CA9CE1;
+    --color-soft: #A499B3;
+  }
+} */
+
+
+
+@theme {
+  --color-brand-green: #387a35;
+  --color-brand-green-dark: #337030;
+  --color-brand-jet: #2F2F2F;
+  /* jetset */
+  --color-brand-rompadour: #DC7F9B; /* Rose pompadour */
+  --color-brand-tearose: #E0B7B7;
+  --color-brand-carnationpink: #F7A1C4;
+  --color-brand-clue: #94BFA7; /* Cambridge blue */
+  --color-controls-hover: #769a86;
+  /* amontillado */
+  --color-brand-wine: #753742;
+  --color-brand-darkwine: #4F3130;  /* Caput mortuum */
+  --color-brand-redwood: #AA5042;
+  --color-brand-ecru: #D8BD8A;
+  --color-brand-flax: #D8D78F;
+  /* mintgoth */
+  --color-brand-amarine: #0FF4C6; /* Aquamarine */
+  --color-brand-black: #000009;
+  --color-brand-spacegray: #464F51;
+  --color-brand-mint: #DEFFF2;
+  --color-brand-plum: #D68FD6;
+  /* spring */
+  --color-brand-liffon: #F4F0BB; /* Lemon chiffon */
+  --color-brand-bistre: #43291F;
+  --color-brand-pistachio: #87C38F; 
+  --color-brand-mint: #226F54; /* Dark spring green */
+  --color-brand-poppy: #DA2C38;
+  /* green */
+  --color-brand-jade: #0DAB76;
+  --color-brand-pigreen: #139A43; /* Pigment green */
+  --color-brand-dareen: #0B5D1E; /* Dartmouth green */
+  --color-brand-pakeen: #053B06; /* Pakistan green */
+  --color-brand-black: #000000;
+  /* thistle */
+  --color-brand-palepurp0: #F3E0EC;
+  --color-brand-palepurp1: #EAD5E6;
+  --color-brand-mauve: #F2BEFC;
+  --color-brand-wisteria: #CA9CE1;
+  --color-brand-chiolet: #685F74; /* Chinese violet */
+  --color-brand-eggplant: #60495A;
+  --color-brand-englet: #3F3244; /* Englsih violet */
+  --color-brand-darkpurp0: #2F2235;
+  --color-brand-darkpurp0: #2F2235;
+  --color-brand-raisinblack: #1B1725;
+  --color-brand-rosequartz: #A499B3;
+  --color-brand-thistle: #D0BCD5;
+}

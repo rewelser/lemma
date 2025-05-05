@@ -1,0 +1,291 @@
+@import "tailwindcss";
+
+@variant conkcreet {
+  --color-bg: oklch(96.7% 0.003 264.542);
+  --color-text: black;
+  --color-text-alt: white;
+  --color-text-error: red;
+  --color-accent: royalblue;
+  --color-soft: white;
+  --color-controls: oklch(0.63 0.11 228.84);
+  --color-controls-hover: oklch(0.56 0.13 231.31);
+  --color-controls-disabled: oklch(0.68 0.07 227.41);
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto skyblue;
+  }
+  --font-weight-header: bold;
+  --font-weight-error: normal;
+  --input-colors: black;
+  --input-border-width: 2px;
+  --border-radii: var(--radius-lg);
+}
+
+@variant soot {
+  --color-bg: #1b1c1c;
+  --color-text: white;
+  --color-text-alt: white;
+  --color-text-error: crimson;
+  --color-accent: crimson;
+  --color-soft: #2c2d2d;
+  --color-controls: #FF5733;
+  --color-controls: #FF2400;
+  --color-controls: #ff6400;
+  --color-controls-secondary: #feaf25;
+  --color-controls-hover: #b90e2f;
+  --color-controls-disabled: #d15e74;
+  --color-controls-hover: #e22002;
+  --color-controls-disabled: #ff7661;
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto royalblue;
+  }
+  --font-weight-header: normal;
+  --font-weight-error: normal;
+  --input-colors: white;
+  --input-border-width: 1px;
+  --border-radii: var(--radius-sm);
+}
+
+@variant jetset {
+  --color-bg: #2F2F2F;
+  --color-text: #2F2F2F;
+  --color-text-alt: #2F2F2F;
+  --color-text-error: crimson;
+  --color-accent: #F7A1C4;
+  --color-accent: #B31E5B;
+  --color-accent: #1A864C;
+  --color-accent: #68C291;
+  --color-accent: #4E966F;
+  --color-soft: #E0B7B7;
+  --color-controls: #E35D84;
+  --color-controls-hover: #c54d6f;
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto #68c291;
+  }
+  --font-weight-header: bold;
+  --font-weight-error: normal;
+  --input-colors: #2F2F2F;
+  --input-border-width: 2px;
+  --border-radii: var(--radius-lg);
+}
+
+@variant amontillado {
+  --color-bg: #f4ecd8;
+  --color-text: #5b4636;
+  --color-text-alt: #f4ecd8;
+  --color-text-error: oklch(0.45 0.21 29.15);
+  --color-accent: #AA5042;
+  --color-soft: #D8BD8A;
+  --color-controls: #753742;
+  --color-controls-hover: #4F3130;
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto gold;
+  }
+  --font-weight-header: bold;
+  --font-weight-error: normal;
+  --input-colors: #5b4636;
+  --input-border-width: 2px;
+  --border-radii: var(--radius-lg);
+}
+
+@variant spring {
+  --color-bg: #F4F0BB;
+  --color-text: #43291F;
+  --color-text-alt: #43291F;
+  --color-text-error: oklch(0.5 0.1416 23.75);
+  --color-accent: #DA2C38;
+  --color-soft: #87C38F;
+  --color-controls: #0DAB76;
+  --color-controls-hover: #0d9e6d;
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto #ffb1b6;
+  }
+  --font-weight-header: bold;
+  --font-weight-error: normal;
+  --input-colors: #43291F;
+  --input-border-width: 2px;
+  --border-radii: var(--radius-lg);
+}
+
+@variant forest {
+  --color-bg: #334234;
+  --color-text: #D8D78F;
+  --color-text-alt: #D8D78F;
+  --color-text-error: #a8000c;
+  --color-accent: gold;
+  --color-soft: #0DAB76;
+  --color-controls: #694232;
+  --color-controls-hover: #43291F;
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto gold;
+  }
+  --font-weight-header: bold;
+  --font-weight-error: normal;
+  --input-colors: #694232;
+  --input-border-width: 2px;
+  --border-radii: var(--radius-lg);
+}
+
+@variant thistle {
+  --color-bg: #F3E0EC;
+  /* --color-bg: #D0BCD5; */
+  --color-text: #2F2235;
+  --color-text-alt: #2F2235;
+  --color-text-error: crimson;
+  --color-accent: #CA9CE1;
+  --color-accent: #84549D;
+  --color-soft: #A499B3;
+  --color-soft: #D0BCD5;
+  --color-controls: #A499B3;
+  --color-controls-secondary: #feaf25;
+  --color-controls-hover: #887f95;
+  button:focus,
+  button:focus-visible,
+  input:focus,
+  input:focus-visible,
+  select:focus,
+  select:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: 4px auto deeppink;
+    outline: 4px auto fuchsia;
+    outline: 4px auto rgb(255, 229, 255);
+  }
+  --font-weight-header: bold;
+  --font-weight-error: normal;
+  --input-colors: #2F2235;
+  --input-border-width: 2px;
+  --border-radii: var(--radius-lg);
+}
+
+/* @custom-variant dark (&:where(.dark, .dark *)); */
+@custom-variant conkcreet (&:where([data-theme=conkcreet], [data-theme=conkcreet] *));
+@custom-variant soot (&:where([data-theme=soot], [data-theme=soot] *));
+@custom-variant jetset (&:where([data-theme=jetset], [data-theme=jetset] *));
+@custom-variant amontillado (&:where([data-theme=amontillado], [data-theme=amontillado] *));
+@custom-variant spring (&:where([data-theme=spring], [data-theme=spring] *));
+@custom-variant forest (&:where([data-theme=forest], [data-theme=forest] *));
+@custom-variant thistle (&:where([data-theme=thistle], [data-theme=thistle] *));
+
+html[data-theme="soot"] {
+  font-family: Georgia, serif;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* index.css */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  /* border-radius: 8px; */
+  /* border: 1px solid transparent; */
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button.default {
+  background-color: #1a1a1a;
+}
+button:hover {
+  /* border-color: #646cff; */
+  border-color: red;
+}
+/* button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+} */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
