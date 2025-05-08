@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import InputField from "./InputField";
 import TextAreaField from "./TextAreaField";
-import { PostType, PostRelationshipType } from "../types";
+import { PostType, PostRelationshipType, RELATIONSHIP_TYPES, RELATIONSHIP_LABELS } from "../types";
 
 interface NewPostFormProps {
   onCreatePost: (
@@ -15,12 +15,6 @@ interface NewPostFormProps {
   ) => void;
   posts: PostType[]; // pass all existing posts so user can pick one
 }
-
-const RELATIONSHIP_TYPES: PostRelationshipType[] = [
-  "dependsOn",
-  "contradicts",
-  "rephrases",
-];
 
 const NewPostForm = ({ onCreatePost, posts }: NewPostFormProps) => {
   const { isAuthenticated } = useContext(AuthContext)!;
@@ -107,7 +101,7 @@ const NewPostForm = ({ onCreatePost, posts }: NewPostFormProps) => {
           >
             {RELATIONSHIP_TYPES.map((type) => (
               <option key={type} value={type}>
-                {type}
+                {RELATIONSHIP_LABELS[type]}
               </option>
             ))}
           </select>

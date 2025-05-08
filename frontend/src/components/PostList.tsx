@@ -1,26 +1,21 @@
 import Post from "./Post";
+import { PostType, PostRelationshipType } from "../types";
 
 interface PostListProps {
-  posts: {
-    id: number;
-    title: string;
-    body: string;
-    author: string;
-    createdAt: string;
-    comments: {
-      id: number;
-      author: string;
-      text: string;
-      createdAt: string;
-    }[];
-  }[];
+  posts: PostType[];
+  onAddComment: (postId: number, text: string) => void;
+  onProposeRelationship: (
+    postId: number,
+    relationshipType: PostRelationshipType,
+    targetPostId: number
+  ) => void;
 }
 
-const PostList = ({ posts }: PostListProps) => {
+const PostList = ({ posts, onAddComment, onProposeRelationship }: PostListProps) => {
   return (
     <div className="space-y-8">
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} onAddComment={onAddComment} onProposeRelationship={onProposeRelationship} />
       ))}
     </div>
   );

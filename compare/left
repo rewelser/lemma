@@ -1,11 +1,5 @@
-const handleCreatePost = (title: string, body: string) => {
-  const newPost: PostType = {
-    id: posts.length + 1,
-    title,
-    body,
-    author: "currentuser", // later: pull from auth
-    createdAt: new Date().toISOString(),
-    comments: [],
-  };
-  setPosts([newPost, ...posts]); // newest first
-};
+{showComments && (
+  <div className="mt-4">
+    <CommentSection actions={post.actions} postId={post.id} />
+  </div>
+)}
