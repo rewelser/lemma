@@ -13,13 +13,15 @@ interface CommentSectionProps {
     relationshipType: PostRelationshipType,
     targetPostId: number
   ) => void;
+  onVote: (postId: number, actionId: number, delta: number) => void;
 }
 
-const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship }: CommentSectionProps) => {
+
+const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, onVote }: CommentSectionProps) => {
   const { isAuthenticated } = useContext(AuthContext)!;
   const [newComment, setNewComment] = useState("");
   const [relType, setRelType] = useState<PostRelationshipType>("dependsOn");
-const [relTargetId, setRelTargetId] = useState("");
+  const [relTargetId, setRelTargetId] = useState("");
 
 
   const handleAddComment = (e: React.FormEvent) => {
@@ -34,6 +36,10 @@ const [relTargetId, setRelTargetId] = useState("");
     onAddComment(postId, newComment);
     setNewComment("");
   };
+
+  const handleVote = (actionId: number, delta: number) => {
+    onVote(postId, actionId, delta);
+  };  
 
   return (
     <div className="space-y-4">
@@ -70,9 +76,21 @@ const [relTargetId, setRelTargetId] = useState("");
                 <p className="text-xs opacity-60">
                   {new Date(action.createdAt).toLocaleString()}
                 </p>
-                <p className="text-xs mt-1">
-                  👍 {action.votes} {/* voting system to be added */}
-                </p>
+                <div className="text-xs mt-1 flex items-center gap-3">
+                  <button
+                    onClick={() => handleVote(action.id, 1)}
+                    className="hover:text-green-600 font-bold"
+                  >
+                    👍
+                  </button>
+                  <span>{action.votes}</span>
+                  <button
+                    onClick={() => handleVote(action.id, -1)}
+                    className="hover:text-red-600 font-bold"
+                  >
+                    👎
+                  </button>
+                </div>
               </div>
             );
           }

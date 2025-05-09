@@ -5,6 +5,8 @@ import { PostType, PostRelationshipType } from "../types";
 
 const Home: React.FC = () => {
 
+  const [userVotes, setUserVotes] = useState<Record<number, number>>({}); // key: actionId, value: 1 or -1
+  
   const [posts, setPosts] = useState<PostType[]>([
     {
       id: 1,
@@ -142,11 +144,37 @@ const Home: React.FC = () => {
     );
   };
 
+  const handleVote = (postId: number, actionId: number, delta: number) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => {
+        if (post.id !== postId) return post;
+  
+        const updatedActions = post.actions.map((action) => {
+          if (action.type === "relationshipProposal" && action.id === actionId) {
+            return {
+              ...action,
+              votes: action.votes + delta,
+            };
+          }
+          return action;
+        });
+  
+        return { ...post, actions: updatedActions };
+      })
+    );
+  };
+  
+
   return (
       <div className="w-full max-w-4xl mx-auto">
         <NewPostForm onCreatePost={handleCreatePost} posts={posts} />
 
-        <PostList posts={posts} onAddComment={handleAddComment} onProposeRelationship={handleProposeRelationship} />
+        <PostList
+          posts={posts}
+          onAddComment={handleAddComment}
+          onProposeRelationship={handleProposeRelationship}
+          onVote={handleVote}
+        />
       </div>
   );
 };

@@ -1,5 +1,33 @@
-{showComments && (
-  <div className="mt-4">
-    <CommentSection actions={post.actions} postId={post.id} onAddComment={onAddComment} />
-  </div>
-)}
+const handleVote = (postId: number, actionId: number, delta: number) => {
+  setPosts(prevPosts =>
+    prevPosts.map(post => {
+      if (post.id !== postId) return post;
+
+      return {
+        ...post,
+        actions: post.actions.map(action => {
+          if (action.type === "relationshipProposal" && action.id === actionId) {
+            // Prevent double voting
+            const currentVote = userVotes[actionId] || 0;
+            const newVote = currentVote === delta ? 0 : delta;
+
+            // Update vote count accordingly
+            const voteDiff = newVote - currentVote;
+
+            // Update votes in action
+            const updatedAction = {
+              ...action,
+              votes: action.votes + voteDiff,
+            };
+
+            // Update userVotes state
+            setUserVotes(prev => ({ ...prev, [actionId]: newVote }));
+
+            return updatedAction;
+          }
+          return action;
+        }),
+      };
+    })
+  );
+};

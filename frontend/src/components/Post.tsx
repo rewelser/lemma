@@ -11,9 +11,11 @@ interface PostProps {
     relationshipType: PostRelationshipType,
     targetPostId: number
   ) => void;
+  onVote: (postId: number, actionId: number, delta: number) => void;
 }
 
-const Post = ({ post, onAddComment, onProposeRelationship }: PostProps) => {
+
+const Post = ({ post, onAddComment, onProposeRelationship, onVote }: PostProps) => {
   const [showComments, setShowComments] = useState(false);
   const authContext = useContext(AuthContext);
 
@@ -71,6 +73,7 @@ const Post = ({ post, onAddComment, onProposeRelationship }: PostProps) => {
             postId={post.id}
             onAddComment={onAddComment}
             onProposeRelationship={onProposeRelationship}
+            onVote={onVote}
           />
         </div>
       )}
