@@ -12,10 +12,11 @@ interface PostProps {
     targetPostId: number
   ) => void;
   onVote: (postId: number, actionId: number, delta: number) => void;
+  userVotes: Record<number, number>;
 }
 
 
-const Post = ({ post, onAddComment, onProposeRelationship, onVote }: PostProps) => {
+const Post = ({ post, onAddComment, onProposeRelationship, onVote, userVotes }: PostProps) => {
   const [showComments, setShowComments] = useState(false);
   const authContext = useContext(AuthContext);
 
@@ -74,6 +75,7 @@ const Post = ({ post, onAddComment, onProposeRelationship, onVote }: PostProps) 
             onAddComment={onAddComment}
             onProposeRelationship={onProposeRelationship}
             onVote={onVote}
+            userVotes={userVotes}
           />
         </div>
       )}

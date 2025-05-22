@@ -34,7 +34,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Position> positions = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
@@ -79,11 +79,11 @@ public class User {
         this.password = PASSWORD_ENCODER.encode(rawPassword);
     }
 
-    public List<Position> getPositions() {
-        return positions;
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setPositions(List<Position> positions) {
-        this.positions = positions;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

@@ -10,13 +10,14 @@ interface PostListProps {
     targetPostId: number
   ) => void;
   onVote: (postId: number, actionId: number, delta: number) => void;
+  userVotes: Record<number, number>;
 }
 
-const PostList = ({ posts, onAddComment, onProposeRelationship, onVote }: PostListProps) => {
+const PostList = ({ posts, onAddComment, onProposeRelationship, onVote, userVotes }: PostListProps) => {
   return (
     <div className="space-y-8">
       {posts.map((post) => (
-        <Post key={post.id} post={post} onAddComment={onAddComment} onProposeRelationship={onProposeRelationship} onVote={onVote} />
+        <Post key={post.id} post={post} onAddComment={onAddComment} onProposeRelationship={onProposeRelationship} onVote={onVote} userVotes={userVotes} />
       ))}
     </div>
   );

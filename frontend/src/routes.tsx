@@ -1,6 +1,6 @@
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Home from "./pages/Home";
-// import PositionDetail from "./pages/PositionDetail";
+// import PostDetail from "./pages/PostDetail";
 // import GraphView from "./pages/GraphView";
 // import Profile from "./pages/Profile";
 // import Login from "./pages/Login";
@@ -14,7 +14,7 @@
 //     </Route> */}
 //       <Route path="/" element={<Home />} />
 //       <Route path="/home" element={<Home />} />
-//       <Route path="/position/:id" element={<PositionDetail />} />
+//       <Route path="/post/:id" element={<PostDetail />} />
 //       <Route path="/graph" element={<GraphView />} />
 //       <Route path="/profile/:username" element={<Profile />} />
 //       <Route path="/login" element={<Login />} />
@@ -32,7 +32,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import PositionDetail from "./pages/PositionDetail";
+import PostDetail from "./pages/PostDetail";
 import GraphView from "./pages/GraphView";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
@@ -45,7 +45,7 @@ const AppRoutes: React.FC = () => (
     <Routes>
     <Route path="/" element={<Layout />}>
       <Route path="home" element={<Home />} />
-      <Route path="position/:id" element={<PositionDetail />} />
+      <Route path="post/:id" element={<PostDetail />} />
       <Route path="graph" element={<GraphView />} />
       <Route path="profile/:username" element={<Profile />} />
       <Route path="login" element={<Login />} />

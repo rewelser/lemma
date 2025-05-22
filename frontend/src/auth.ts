@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:8080"; // adjust when needed
+import { API_BASE_URL } from "./config";
+
 
 export const register = async (username: string, email: string, password: string): Promise<boolean> => {
     try {

@@ -4,16 +4,16 @@ src/main/java/com/example/restservice/
 │── RestServiceApplication.java   # Main application entry point
 │
 ├── model/
-│   ├── Position.java             # Entity class
+│   ├── Post.java             # Entity class
 │
 ├── repository/
-│   ├── PositionRepository.java   # JPA repository interface
+│   ├── PostRepository.java   # JPA repository interface
 │
 ├── service/
-│   ├── PositionService.java      # Business logic
+│   ├── PostService.java      # Business logic
 │
 ├── controller/
-│   ├── PositionController.java   # REST API endpoints
+│   ├── PostController.java   # REST API endpoints
 │
 └── config/
     ├── DatabaseConfig.java       # Optional DB configuration
@@ -22,7 +22,7 @@ src/main/java/com/example/restservice/
 frontend/
 │── src/
 │   ├── components/          # Reusable UI components
-│   ├── pages/               # Core pages (Home, Profile, Position Detail, Graph, Auth)
+│   ├── pages/               # Core pages (Home, Profile, Post Detail, Graph, Auth)
 │   ├── App.js               # Root React component
 │   ├── main.jsx             # Entry point (if using Vite)
 │   ├── routes.js            # Centralized route definitions

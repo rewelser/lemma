@@ -14,15 +14,15 @@ interface CommentSectionProps {
     targetPostId: number
   ) => void;
   onVote: (postId: number, actionId: number, delta: number) => void;
+  userVotes: Record<number, number>;
 }
 
 
-const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, onVote }: CommentSectionProps) => {
+const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, onVote, userVotes }: CommentSectionProps) => {
   const { isAuthenticated } = useContext(AuthContext)!;
   const [newComment, setNewComment] = useState("");
   const [relType, setRelType] = useState<PostRelationshipType>("dependsOn");
   const [relTargetId, setRelTargetId] = useState("");
-
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
 
   const handleVote = (actionId: number, delta: number) => {
     onVote(postId, actionId, delta);
-  };  
+  };
 
   return (
     <div className="space-y-4">
@@ -63,6 +63,7 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
           }
 
           if (action.type === "relationshipProposal") {
+            const voteState = userVotes[action.id] ?? 0;
             return (
               <div
                 key={action.id}
@@ -77,19 +78,19 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
                   {new Date(action.createdAt).toLocaleString()}
                 </p>
                 <div className="text-xs mt-1 flex items-center gap-3">
-                  <button
-                    onClick={() => handleVote(action.id, 1)}
-                    className="hover:text-green-600 font-bold"
-                  >
-                    👍
-                  </button>
-                  <span>{action.votes}</span>
-                  <button
-                    onClick={() => handleVote(action.id, -1)}
-                    className="hover:text-red-600 font-bold"
-                  >
-                    👎
-                  </button>
+                <button
+                  onClick={() => handleVote(action.id, 1)}
+                  className={`hover:text-green-600 font-bold ${voteState === 1 ? "text-green-500" : ""}`}
+                >
+                  👍
+                </button>
+                <span>{action.votes}</span>
+                <button
+                  onClick={() => handleVote(action.id, -1)}
+                  className={`hover:text-red-600 font-bold ${voteState === -1 ? "text-red-500" : ""}`}
+                >
+                  👎
+                </button>
                 </div>
               </div>
             );
