@@ -19,10 +19,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+
 
 
 @Service
 public class PostService {
+    // public class PostService implements ApplicationListener<ContextRefreshedEvent> {
     private final PostRepository postRepository;
     private final VoteRepository voteRepository;
     private final UserService userService;
@@ -91,13 +95,19 @@ public class PostService {
         return voteRepository.findByUser(user);
     }
 
-    @Transactional
-    public void debugPrintSeededPosts() {
-        postRepository.findAll().forEach(post -> {
-            System.out.println("📦 Post: " + post.getTitle() + " | Actions: " + post.getActions().size());
-    });
-}
+    // @Transactional
+    // public void debugPrintSeededPosts() {
+    //     postRepository.findAll().forEach(post -> {
+    //         System.out.println("📦 Post: " + post.getTitle() + " | Actions: " + post.getActions().size());
+    //     });
+    // }
 
+    // @Override
+    // public void onApplicationEvent(ContextRefreshedEvent event) {
+    //     seedPosts(); // will now be called after Spring is ready
+    // }
+
+    // @Transactional
     @PostConstruct
     public void seedPosts() {
         if (postRepository.count() > 0) return;
@@ -162,7 +172,11 @@ public class PostService {
         voteRepository.save(v2);
 
         System.out.println("✅ Seed posts inserted");
-        debugPrintSeededPosts(); // <-- now safe due to @Transactional
+        // debugPrintSeededPosts(); // <-- now safe due to @Transactional
+        postRepository.findAll().forEach(post -> {
+            // System.out.println("📦 Post: " + post.getTitle() + " | Actions: " + post.getActions().size());
+            System.out.println("📦 Total posts inserted: " + postRepository.count());
+        });
         
     }
 
