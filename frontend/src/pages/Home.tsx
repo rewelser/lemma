@@ -2,13 +2,17 @@ import PostList from "../components/PostList";
 import NewPostForm from "../components/NewPostForm";
 import { useState } from "react";
 import { useEffect } from "react";
-import { PostType, PostRelationshipType } from "../types";
-import { voteOnAction as voteOnActionAPI } from "../api"; // ✅ or adjust path
-import { fetchPostDTO, fetchMyVotes } from "../api"; // adjust path as needed
+import { PostType, PostRelationshipKindType, RelationshipProposalActionType } from "../types";
+import { fetchPostDTO, fetchMyVotes, fetchPaginatedPosts, createPost as createPostAPI, voteOnAction as voteOnActionAPI, proposeRelationship } from "../api"; // adjust path as needed
 
 const Home: React.FC = () => {
 
   const [userVotes, setUserVotes] = useState<Record<number, number>>({}); // key: actionId, value: 1 or -1
+  const [posts, setPosts] = useState<PostType[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [relationshipError, setRelationshipError] = useState<string | null>(null);
 
   // const [posts, setPosts] = useState<PostType[]>([
   //   {
@@ -68,20 +72,67 @@ const Home: React.FC = () => {
   //   },
   // ]);
 
-  const [posts, setPosts] = useState<PostType[]>([]);
+
+
+  // useEffect(() => { // previous, for single post--replacing with multi via loadInitialPosts
+  //   const loadPost = async () => {
+  //     try {
+  //       const post = await fetchPostDTO(2); // change this ID if needed
+  //       setPosts([post]); // just load one for now
+  //     } catch (err) {
+  //       console.error("Failed to load post DTO:", err);
+  //     }
+  //   };
+  
+  //   loadPost();
+  // }, []);
 
   useEffect(() => {
-    const loadPost = async () => {
+    const loadInitialPosts = async () => {
       try {
-        const post = await fetchPostDTO(2); // change this ID if needed
-        setPosts([post]); // just load one for now
+        setIsLoading(true);
+        const data = await fetchPaginatedPosts(0); // page 0
+        setPosts(data.content);
+        setHasMore(!data.last);
+        setPage(1); // next page
       } catch (err) {
-        console.error("Failed to load post DTO:", err);
+        console.error("Failed to load initial posts", err);
+      } finally {
+        setIsLoading(false);
       }
     };
   
-    loadPost();
+    loadInitialPosts();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
+  
+      if (nearBottom && hasMore && !isLoading) {
+        loadMorePosts();
+      }
+    };
+  
+    const loadMorePosts = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchPaginatedPosts(page);
+        setPosts(prev => [...prev, ...data.content]);
+        setHasMore(!data.last);
+        setPage(prev => prev + 1);
+      } catch (err) {
+        console.error("Failed to load more posts", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [page, hasMore, isLoading]);  
+  
 
   useEffect(() => { // old
     async function loadVotes() {
@@ -120,26 +171,53 @@ const Home: React.FC = () => {
   // }, []);
   
 
-  const handleCreatePost = (
+  // const handleCreatePost = ( // old createPost--mocks on frontend but does not actually create
+  //   title: string,
+  //   body: string,
+  //   relationships?: {
+  //     type: PostRelationshipType;
+  //     post: { id: number; title: string; author: string };
+  //   }[]
+  // ) => {
+  //   const newPost: PostType = {
+  //     id: posts.length + 1,
+  //     title,
+  //     body,
+  //     author: "currentuser",
+  //     createdAt: new Date().toISOString(),
+  //     actions: [],
+  //     relationships,
+  //   };    
+  
+  //   setPosts([newPost, ...posts]);
+  // };
+
+  const handleCreatePost = async (
     title: string,
     body: string,
     relationships?: {
-      type: PostRelationshipType;
+      type: PostRelationshipKindType;
       post: { id: number; title: string; author: string };
     }[]
   ) => {
-    const newPost: PostType = {
-      id: posts.length + 1,
-      title,
-      body,
-      author: "currentuser",
-      createdAt: new Date().toISOString(),
-      actions: [],
-      relationships,
-    };    
+    try {
+      const relationshipPayload = relationships?.map(rel => ({
+        type: rel.type,
+        post: { id: rel.post.id },
+      }));
   
-    setPosts([newPost, ...posts]);
-  };
+      const newPost = await createPostAPI({
+        title,
+        body: body,
+        relationships: relationshipPayload,
+      });
+  
+      setPosts(prev => [newPost, ...prev]);
+    } catch (err) {
+      console.error("Failed to create post:", err);
+      alert("Post creation failed");
+    }
+  };  
 
   const handleAddComment = (postId: number, text: string) => {
     const newComment = {
@@ -161,10 +239,41 @@ const Home: React.FC = () => {
       )
     );
   };
+  
 
-  const handleProposeRelationship = (
+  const handleProposeRelationship = async (
     postId: number,
-    relationshipType: PostRelationshipType,
+    relationshipType: PostRelationshipKindType,
+    targetPostId: number
+  ) => {
+    try {
+      const newAction: RelationshipProposalActionType = await proposeRelationship({
+        postId,
+        relationshipType,
+        targetPostId
+      });
+
+      setRelationshipError(null); // Clear error on success
+
+      setPosts((prev) =>
+        prev.map((post) =>
+          post.id === postId ?  { ...post, actions: [...post.actions, newAction] } : post
+        )
+      );
+    } catch (err: any) {
+      console.error("Failed to propose relationship:", err);
+    
+      if (err instanceof Error) {
+        setRelationshipError(err.message);
+      } else {
+        setRelationshipError("Relationship proposal failed.");
+      }
+    }
+  };
+
+  const handleProposeRelationship_original_hardcoded = (
+    postId: number,
+    relationshipType: PostRelationshipKindType,
     targetPostId: number
   ) => {
     const targetPost = posts.find((p) => p.id === targetPostId);
@@ -237,7 +346,11 @@ const Home: React.FC = () => {
           onProposeRelationship={handleProposeRelationship}
           onVote={handleVote}
           userVotes={userVotes}
+          relationshipError={relationshipError}
+          setRelationshipError={setRelationshipError}
         />
+        {isLoading && <p className="text-center my-4">Loading more posts...</p>}
+        {!hasMore && <p className="text-center my-4 text-gray-500">You've reached the end.</p>}
       </div>
   );
 };

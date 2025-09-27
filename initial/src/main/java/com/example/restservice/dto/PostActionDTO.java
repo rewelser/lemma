@@ -3,6 +3,7 @@ package com.example.restservice.dto;
 import java.time.Instant;
 
 import com.example.restservice.model.PostAction;
+import com.example.restservice.model.PostActionType;
 
 public class PostActionDTO {
     private Long id;
@@ -62,14 +63,18 @@ public class PostActionDTO {
 
     public PostActionDTO(PostAction action) {
         this.id = action.getId();
-        this.type = action.getType().name();
+        // this.type = action.getType().name();
+        this.type = switch (action.getType()) {
+            case COMMENT -> "comment";
+            case RELATIONSHIP_PROPOSAL -> "relationshipProposal";
+        };        
         this.author = action.getUser() != null ? action.getUser().getUsername() : "unknown";
         this.createdAt = action.getCreatedAt();
         this.voteCount = action.getVotes().size();
     
-        if ("comment".equals(action.getType())) {
+        if (action.getType() == PostActionType.COMMENT) {
             this.text = action.getText();
-        } else if ("relationshipProposal".equals(action.getType())) {
+        } else if (action.getType() == PostActionType.RELATIONSHIP_PROPOSAL) {
             this.relationshipType = action.getRelationshipType();
             if (action.getTargetPost() != null) {
                 this.targetPost = new TargetPostDTO(

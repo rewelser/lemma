@@ -1,6 +1,7 @@
 package com.example.restservice.model;
 
 import java.util.List;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import jakarta.persistence.*;
@@ -13,7 +14,8 @@ public class Post {
     private Long id;
 
     private String title;
-    private String description;
+    private String body;
+    private Instant createdAt = Instant.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -35,9 +37,9 @@ public class Post {
     // --- Constructors ---
     public Post() {}
 
-    public Post(String title, String description) {
+    public Post(String title, String body) {
         this.title = title;
-        this.description = description;
+        this.body = body;
     }
 
     // --- Getters & Setters ---
@@ -47,8 +49,8 @@ public class Post {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getBody() { return body; }
+    public void setBody(String body) { this.body = body; }
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
@@ -60,6 +62,14 @@ public class Post {
 
     public List<PostAction> getActions() { return actions; }
     public void setActions(List<PostAction> actions) { this.actions = actions; }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public void addAction(PostAction action) {
         actions.add(action);

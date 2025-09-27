@@ -1,45 +1,45 @@
-export type PostRelationshipType = "dependsOn" | "contradicts" | "rephrases";
+export type PostRelationshipKindType = "dependsOn" | "contradicts" | "rephrases";
 
-export const RELATIONSHIP_TYPES: PostRelationshipType[] = [
+export const RELATIONSHIP_KINDS: PostRelationshipKindType[] = [
     "dependsOn",
     "contradicts",
     "rephrases",
 ];
 
-export const RELATIONSHIP_LABELS: Record<PostRelationshipType, string> = {
+export const RELATIONSHIP_LABELS: Record<PostRelationshipKindType, string> = {
 dependsOn: "Depends On",
 contradicts: "Contradicts",
 rephrases: "Rephrases",
 };
 
-export interface PostReference {
+export interface PostReferenceType {
   id: number;
   title: string;
   author: string;
 }
 
-export type PostActionType = "comment" | "relationshipProposal";
+export type PostActionkindType = "comment" | "relationshipProposal";
 
-export interface BaseAction {
+export interface BaseActionType {
   id: number;
-  type: PostActionType;
+  type: PostActionkindType;
   createdAt: string;
   author: string;
 }
 
-export interface CommentAction extends BaseAction {
+export interface CommentActionType extends BaseActionType {
   type: "comment";
   text: string;
 }
 
-export interface RelationshipProposalAction extends BaseAction {
+export interface RelationshipProposalActionType extends BaseActionType {
   type: "relationshipProposal";
-  relationshipType: PostRelationshipType;
-  targetPost: PostReference;
+  relationshipType: PostRelationshipKindType;
+  targetPost: PostReferenceType;
   votes: number;
 }
 
-export type PostAction = CommentAction | RelationshipProposalAction;
+export type PostActionType = CommentActionType | RelationshipProposalActionType;
 
 export interface PostType {
   id: number;
@@ -47,9 +47,9 @@ export interface PostType {
   body: string;
   author: string;
   createdAt: string;
-  actions: PostAction[]; // ✅ unified action stream
+  actions: PostActionType[]; // ✅ unified action stream
   relationships?: {
-    type: PostRelationshipType;
-    post: PostReference;
+    type: PostRelationshipKindType;
+    post: PostReferenceType;
   }[];
 }

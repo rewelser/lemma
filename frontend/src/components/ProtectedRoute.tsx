@@ -9,10 +9,13 @@ const ProtectedRoute: React.FC = () => {
 
     const { isAuthenticated, isAuthLoading } = authContext;
 
-    if (isAuthLoading) {
-        // return null; // Or loading spinner
-        return <div className="text-center py-10">Checking authentication...</div>;
-    }
+    // if (isAuthLoading) {
+    //     // return null; // Or loading spinner
+    //     return <div className="text-center py-10">Checking authentication...</div>;
+    // }
+
+    if (isAuthLoading) return null;
+
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 

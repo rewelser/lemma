@@ -17,7 +17,7 @@ const PostDetail: React.FC = () => {
       {post ? (
         <>
           <h1 className="text-2xl font-bold">{post.title}</h1>
-          <p>{post.description}</p>
+          <p>{post.body}</p>
         </>
       ) : (
         <p>Loading...</p>

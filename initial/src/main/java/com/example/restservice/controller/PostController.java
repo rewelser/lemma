@@ -1,8 +1,12 @@
 package com.example.restservice.controller;
 
 import com.example.restservice.dto.VoteResponseDTO;
+import com.example.restservice.dto.CreatePostDTO;
+import com.example.restservice.dto.CreateProposalDTO;
+import com.example.restservice.dto.PostActionDTO;
 import com.example.restservice.dto.PostDTO;
 import com.example.restservice.model.Post;
+import com.example.restservice.model.PostAction;
 import com.example.restservice.model.User;
 import com.example.restservice.model.Vote;
 import com.example.restservice.repository.PostActionRepository;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -52,9 +57,19 @@ public class PostController {
     }
 
 
+    // @PostMapping
+    // public Post createPost(@RequestBody Post post) {
+    //     return postService.createPost(post);
+    // }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public Post createPost(@RequestBody Post post) {
-        return postService.createPost(post);
+    public ResponseEntity<PostDTO> createPost(
+        @RequestBody CreatePostDTO postData,
+        @AuthenticationPrincipal User user
+    ) {
+        Post post = postService.createPost(postData, user);
+        return ResponseEntity.ok(new PostDTO(post));
     }
 
     @PutMapping("/{id}")
@@ -69,6 +84,18 @@ public class PostController {
         return postService.deletePost(id) ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.notFound().build();
+    }
+
+
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/propose-relationship")
+    public ResponseEntity<PostActionDTO> proposeRelationship(
+        @RequestBody CreateProposalDTO proposal,
+        @AuthenticationPrincipal User user
+    ) {
+        PostAction action = postService.createRelationshipProposal(proposal, user);
+        return ResponseEntity.ok(new PostActionDTO(action));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -103,7 +130,6 @@ public class PostController {
         }
     }
     
-
     @GetMapping("/my-votes")
     public ResponseEntity<List<VoteResponseDTO>> getMyVotes(@AuthenticationPrincipal User user) {
         List<Vote> votes = postService.getVotesByUser(user);
@@ -111,6 +137,29 @@ public class PostController {
             .map(VoteResponseDTO::new)
             .toList();
         return ResponseEntity.ok(response);
-}
+    }
+
+    @GetMapping("/dto")
+    public ResponseEntity<Page<PostDTO>> getPaginatedPostDTOs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<PostDTO> result = postService.getPaginatedPostDTOs(page, size);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/dto/list")
+    public ResponseEntity<List<PostDTO>> getPostDTOList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<PostDTO> result = postService.getPaginatedPostDTOs(page, size);
+        return ResponseEntity.ok(result.getContent());
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleIllegalState(IllegalStateException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
 }

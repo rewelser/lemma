@@ -1,19 +1,35 @@
-public Vote voteOnAction(User user, Long actionId, int delta) {
-  if (delta < -1 || delta > 1) throw new IllegalArgumentException("Invalid vote value");
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import GraphView from "./pages/GraphView";
+import Profile from "./pages/Profile";
+import PostDetail from "./pages/PostDetail";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import RequireGuest from "./components/RequireGuest";
+import Layout from "./components/Layout";
 
-  PostAction action = postActionRepository.findById(actionId)
-      .orElseThrow(() -> new IllegalArgumentException("PostAction not found"));
+const AppRoutes: React.FC = () => (
+  <Router>
+    <Routes>
+    <Route path="/" element={<Layout />}>
+      <Route path="post/:id" element={<PostDetail />} />
+      <Route path="graph" element={<GraphView />} />
+      <Route path="profile/:username" element={<Profile />} />
+      {/* <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} /> */}
+      {/* ✅ Protect Profile Page */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="profile" element={<Profile />} />
+        <Route path="home" element={<Home />} />
+      </Route>
+    </Route>
+    <Route element={<RequireGuest />}>
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+    </Route>
+    </Routes>
+  </Router>
+);
 
-  return voteRepository.findByUserAndAction(user, action).map(vote -> {
-      int current = vote.getVoteValue();
-      int newValue = (current == delta) ? 0 : delta; // toggle
-      vote.setVoteValue(newValue);
-      return voteRepository.save(vote);
-  }).orElseGet(() -> {
-      Vote vote = new Vote();
-      vote.setUser(user);
-      vote.setAction(action);
-      vote.setVoteValue(delta);
-      return voteRepository.save(vote);
-  });
-}
+export default AppRoutes;

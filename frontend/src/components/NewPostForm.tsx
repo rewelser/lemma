@@ -1,15 +1,17 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import InputField from "./InputField";
+import SecondaryButton from "./SecondaryButton";
+import PrimaryButton from "./PrimaryButton";
 import TextAreaField from "./TextAreaField";
-import { PostType, PostRelationshipType, RELATIONSHIP_TYPES, RELATIONSHIP_LABELS } from "../types";
+import { PostType, PostRelationshipKindType, RELATIONSHIP_KINDS, RELATIONSHIP_LABELS } from "../types";
 
 interface NewPostFormProps {
   onCreatePost: (
     title: string,
     body: string,
     relationships?: {
-      type: PostRelationshipType;
+      type: PostRelationshipKindType;
       post: { id: number; title: string; author: string };
     }[]
   ) => void;
@@ -21,10 +23,10 @@ const NewPostForm = ({ onCreatePost, posts }: NewPostFormProps) => {
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [selectedType, setSelectedType] = useState<PostRelationshipType>("dependsOn");
+  const [selectedType, setSelectedType] = useState<PostRelationshipKindType>("dependsOn");
   const [selectedPostId, setSelectedPostId] = useState<number | undefined>();
   const [relationships, setRelationships] = useState<
-    { type: PostRelationshipType; post: { id: number; title: string; author: string } }[]
+    { type: PostRelationshipKindType; post: { id: number; title: string; author: string } }[]
   >([]);
 
   const handleAddRelationship = () => {
@@ -96,10 +98,10 @@ const NewPostForm = ({ onCreatePost, posts }: NewPostFormProps) => {
         <div className="flex gap-2 items-center">
           <select
             value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value as PostRelationshipType)}
+            onChange={(e) => setSelectedType(e.target.value as PostRelationshipKindType)}
             className="p-2 border rounded text-black"
           >
-            {RELATIONSHIP_TYPES.map((type) => (
+            {RELATIONSHIP_KINDS.map((type) => (
               <option key={type} value={type}>
                 {RELATIONSHIP_LABELS[type]}
               </option>
@@ -112,13 +114,19 @@ const NewPostForm = ({ onCreatePost, posts }: NewPostFormProps) => {
             className="p-2 border rounded text-black"
             placeholder="Enter Post ID"
           />
-          <button
+          {/* <button
             type="button"
             onClick={handleAddRelationship}
             className="bg-blue-500 text-white px-3 py-1 rounded"
           >
             Add
-          </button>
+          </button> */}
+          <SecondaryButton 
+            text="Propose" 
+            type="button" 
+            onClick={handleAddRelationship} 
+            className="w-full" 
+          />
         </div>
 
         {/* Show selected relationships */}
@@ -137,12 +145,10 @@ const NewPostForm = ({ onCreatePost, posts }: NewPostFormProps) => {
         )}
       </div>
 
-      <button
+      <PrimaryButton
+        text="Post"
         type="submit"
-        className="bg-[var(--color-controls)] hover:bg-[var(--color-controls-hover)] text-white font-bold py-2 px-4 rounded mt-4"
-      >
-        Post
-      </button>
+      />
     </form>
   );
 };

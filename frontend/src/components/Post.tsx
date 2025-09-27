@@ -1,22 +1,24 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import CommentSection from "./CommentSection";
-import { PostType, PostRelationshipType } from "../types";
+import { PostType, PostRelationshipKindType } from "../types";
 
 interface PostProps {
   post: PostType;
   onAddComment: (postId: number, text: string) => void;
   onProposeRelationship: (
     postId: number,
-    relationshipType: PostRelationshipType,
+    relationshipType: PostRelationshipKindType,
     targetPostId: number
   ) => void;
   onVote: (postId: number, actionId: number, delta: number) => void;
   userVotes: Record<number, number>;
+  relationshipError?: string | null;
+  setRelationshipError?: (msg: string | null) => void;
 }
 
 
-const Post = ({ post, onAddComment, onProposeRelationship, onVote, userVotes }: PostProps) => {
+const Post = ({ post, onAddComment, onProposeRelationship, onVote, userVotes, relationshipError, setRelationshipError }: PostProps) => {
   const [showComments, setShowComments] = useState(false);
   const authContext = useContext(AuthContext);
 
@@ -76,6 +78,8 @@ const Post = ({ post, onAddComment, onProposeRelationship, onVote, userVotes }: 
             onProposeRelationship={onProposeRelationship}
             onVote={onVote}
             userVotes={userVotes}
+            relationshipError={relationshipError}
+            setRelationshipError={setRelationshipError}
           />
         </div>
       )}

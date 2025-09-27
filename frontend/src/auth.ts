@@ -23,6 +23,18 @@ export const register = async (username: string, email: string, password: string
     }
 }
 
+export const isTokenExpired = (token: string | null) => {
+    if (!token) return true;
+    try {
+        const [, payload] = token.split(".");
+        const decoded = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
+        const now = Math.floor(Date.now() / 1000);
+        return decoded.exp <= now;
+    } catch {
+        return true;
+    }
+};
+
 export const login = async (username: string, password: string): Promise<string | null> => {
     try {
         const response = await fetch(`${API_BASE_URL}/auth/login`, {

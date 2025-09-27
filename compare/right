@@ -1,18 +1,45 @@
-public Vote voteOnAction(User user, PostAction action, int delta) {
-  if (delta < -1 || delta > 1) {
-      throw new IllegalArgumentException("Invalid vote value");
-  }
+// routes.tsx
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import RequireGuest from "./components/RequireGuest";
+import Layout from "./components/Layout";           // sidebar layout (authed)
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
+import GraphView from "./pages/GraphView";
+import Profile from "./pages/Profile";
+import PostDetail from "./pages/PostDetail";
 
-  return voteRepository.findByUserAndAction(user, action).map(vote -> {
-      int current = vote.getVoteValue();
-      int newValue = (current == delta) ? 0 : delta; // toggle vote
-      vote.setVoteValue(newValue);
-      return voteRepository.save(vote);
-  }).orElseGet(() -> {
-      Vote vote = new Vote();
-      vote.setUser(user);
-      vote.setAction(action); // this replaces actionId
-      vote.setVoteValue(delta);
-      return voteRepository.save(vote);
-  });
-}
+// Optional: a minimal public layout to avoid sidebar on auth pages
+const PublicLayout: React.FC = () => <div><Outlet /></div>;
+
+const AppRoutes: React.FC = () => (
+  <Router>
+    <Routes>
+      {/* 🔒 Protected area: Layout renders only when authed */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/graph" element={<GraphView />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/post/:id" element={<PostDetail />} />
+        </Route>
+      </Route>
+
+      {/* 👤 Guest-only area: no sidebar */}
+      <Route element={<RequireGuest />}>
+        <Route element={<PublicLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+      </Route>
+
+      {/* Default + 404 */}
+      <Route path="/" element={<Navigate to="/home" replace />} />
+      <Route path="*" element={<Navigate to="/home" replace />} />
+    </Routes>
+  </Router>
+);
+
+export default AppRoutes;

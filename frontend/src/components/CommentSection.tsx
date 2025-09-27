@@ -1,28 +1,32 @@
 import { useState, useContext } from "react";
-import { PostAction, PostRelationshipType, RELATIONSHIP_TYPES, RELATIONSHIP_LABELS } from "../types";
+import { PostActionType, PostRelationshipKindType, RELATIONSHIP_KINDS, RELATIONSHIP_LABELS } from "../types";
 import TextAreaField from "./TextAreaField";
 import PrimaryButton from "./PrimaryButton";
 import { AuthContext } from "../context/AuthContext";
+import DismissibleError from "./DismissibleError";
 
 interface CommentSectionProps {
-  actions: PostAction[];
+  actions: PostActionType[];
   postId: number;
   onAddComment: (postId: number, text: string) => void;
   onProposeRelationship: (
     postId: number,
-    relationshipType: PostRelationshipType,
+    relationshipType: PostRelationshipKindType,
     targetPostId: number
   ) => void;
   onVote: (postId: number, actionId: number, delta: number) => void;
   userVotes: Record<number, number>;
+  relationshipError?: string | null;
+  setRelationshipError?: (msg: string | null) => void;
 }
 
 
-const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, onVote, userVotes }: CommentSectionProps) => {
+const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, onVote, userVotes, relationshipError, setRelationshipError }: CommentSectionProps) => {
   const { isAuthenticated } = useContext(AuthContext)!;
   const [newComment, setNewComment] = useState("");
-  const [relType, setRelType] = useState<PostRelationshipType>("dependsOn");
+  const [relType, setRelType] = useState<PostRelationshipKindType>("dependsOn");
   const [relTargetId, setRelTargetId] = useState("");
+  // const [relationshipError, setRelationshipError] = useState<string | null>(null);
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +51,9 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
         <p className="opacity-30">No comments or activity yet.</p>
       ) : (
         actions.map((action) => {
+          console.log("Action type:", action.type);
           if (action.type === "comment") {
+            console.log("Rendering a comment:", action);
             return (
               <div
                 key={action.id}
@@ -64,6 +70,7 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
 
           if (action.type === "relationshipProposal") {
             const voteState = userVotes[action.id] ?? 0;
+            console.log(action);
             return (
               <div
                 key={action.id}
@@ -129,10 +136,10 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
           </label>
           <select
             value={relType}
-            onChange={(e) => setRelType(e.target.value as PostRelationshipType)}
+            onChange={(e) => setRelType(e.target.value as PostRelationshipKindType)}
             className="border p-2 w-full mb-2 rounded text-black"
           >
-            {RELATIONSHIP_TYPES.map((type) => (
+            {RELATIONSHIP_KINDS.map((type) => (
               <option key={type} value={type}>
                 {RELATIONSHIP_LABELS[type]}
               </option>
@@ -146,6 +153,13 @@ const CommentSection = ({ actions, postId, onAddComment, onProposeRelationship, 
             className="border p-2 w-full mb-2 rounded text-black"
           />
           <PrimaryButton type="submit" text="Propose" className="w-full" />
+          {/* {relationshipError && (
+            <p className="text-red-500 text-sm mt-2">{relationshipError}</p>
+          )} */}
+          <DismissibleError
+            message={relationshipError ?? null}
+            onDismiss={() => setRelationshipError?.(null)}
+          />
         </form>
       )}
 

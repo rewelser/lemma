@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import InputField from "../components/InputField";
 import PrimaryButton from "../components/PrimaryButton";
 import ThemeToggle from "../components/ThemeToggle"; // adjust path if needed
+import AnimatedBackground from "../components/AnimatedBackground";
 
 const Login: React.FC = () => {
     // return <div><h1>Login Page</h1></div>; // empty page
@@ -29,8 +30,9 @@ const Login: React.FC = () => {
 // h1 inside that used to have text-black
     return (
     <div className="w-full flex min-h-screen items-center justify-center px-4 bg-[var(--color-bg)] text-[var(--color-text)]">
+        <AnimatedBackground />
         <div className="w-full max-w-md bg-primary-light shadow-md rounded-(--border-radii) p-6 bg-[var(--color-soft)]">
-            <h1 className="text-2xl font-(--font-weight-header) text-center mb-4">Login</h1>
+            <h1 className="text-2xl font-(--font-weight-header) text-center mb-4">Login</h1><AnimatedBackground />
             {error && <p className="font-[var(--font-weight-error)] text-[var(--color-text-error)] text-center">{error}</p>}
             <InputField
                 placeholder="Username"
